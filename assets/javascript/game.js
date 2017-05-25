@@ -21,39 +21,43 @@ document.onkeyup = function start (event) {
 		// If the number of guesses left is equal to the starting number, then a letter is assigned to computerLetter.
 		if (guessesLeft == 9) {
 			computerLetter = letters[Math.floor(Math.random() * letters.length)];
-			//console.log('User Guessed: ' + userGuess);
-			console.log('The computer chose: ' + computerLetter);
-		// If the number of guesses is not equal to nine and is less than 0, then array of guesses is emptied,
-		// reset guesses to 9, and add 1 to the loss count. 
+			console.log('User guessed: ' + userGuess);
+			//console.log('The computer chose: ' + computerLetter);
+		// If the number of guesses is not equal to nine and is less than 1, then array of guesses is emptied,
+		// reset guesses to 9, and 1 is added to the loss count. 
 		} else if (guessesLeft < 1) {
 				console.log("User Loses. Answer was: " + computerLetter);
 				guessesInputted = [];
 				numberLosses++;
 				guessesLeft = 9;
-			
-		}	if (userGuess != computerLetter) {
-			guessesInputted.push(' ' + userGuess);
+		// If the letter the user selected is not equal to the letter the computer selected, AND, if
+		// the user's letter has not already been selected, then the letter is added to guessed list and
+		// Losses goes up by one
+		}	if ((userGuess != computerLetter) && (guessesInputted.indexOf(userGuess) < 0)) {
+			guessesInputted.push(userGuess);
 			guessesLeft--;
-			console.log('User guessed: ' + userGuess);
-			console.log('The computer chose: ' + computerLetter);
-			console.log("User loses a guess!");
-
-			//else if (guessInputted.indexOf(userGuess) >= 0) {
-			//console.log("Letter already guessed. Try again. ")
-		
+			//console.log(guessesInputted.indexOf(userGuess));
+			//console.log('User guessed: ' + userGuess);
+			//console.log('The computer chose: ' + computerLetter);
+			console.log("Wrong! User loses a guess!");
+		// If letter has been selected than nothing will happen and console will log a message that the key has been
+		// pressed.
+		}	else if ((userGuess != computerLetter) && (guessesInputted.indexOf(userGuess)) >= 0) {
+				console.log("Letter already guessed. Try again. ")
+		// User selected correct key and game resets.
 		}	 else {
 				guessesInputted = [];
 				numberWins++;
 				guessesLeft = 9;
-				console.log("User chose the correct letter! User Wins!");
+				console.log("User chose the correct letter! User wins!");
 			}
 			
 		}
-		
+	// Non aphabet key is recnogized but not able to be played.
 	else {
 		console.log("Enter a valid key");
 	}
-
+// Displays javascript iin HTML
 	document.getElementById("numberGuesses").innerHTML = guessesLeft;
 	document.getElementById("losses").innerHTML = numberLosses;
 	document.getElementById("wins").innerHTML = numberWins;
